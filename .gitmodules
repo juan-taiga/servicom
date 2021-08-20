@@ -1,0 +1,4 @@
+[submodule "rafael-taiga/rafael-servicom"]
+	path = rafael-taiga/rafael-servicom
+	url = git@github.com:rafael-taiga/rafael-servicom.git
+	branch = main
