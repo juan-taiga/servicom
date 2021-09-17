@@ -26,9 +26,8 @@ msgid ""
 "(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or "
 "'Order - %s' % (object.name)"
 msgstr ""
-"${object.company_id.name} ${object.state in ('draft', 'sent') and "
-"(ctx.get('proforma') and 'Proforma' or ‘Presupuesto’) or ‘Pedido’} (Ref "
-"${object.name or 'n/a' })"
+"(object.state in ('draft', 'sent') and 'Presupuesto - %s' % (object.name)) "
+"or 'Pedido - %s' % (object.name)"
 
 #. module: sale_extended_taiga
 #: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
