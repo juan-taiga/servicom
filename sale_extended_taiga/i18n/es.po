@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-16 23:02+0000\n"
-"PO-Revision-Date: 2021-09-16 23:02+0000\n"
+"POT-Creation-Date: 2021-09-17 16:04+0000\n"
+"PO-Revision-Date: 2021-09-17 16:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,12 +16,22 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "&amp;nbsp;<span>on</span>&amp;nbsp;"
-msgstr ""
+msgstr "&amp;nbsp;<span>de</span>&amp;nbsp;"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model:ir.actions.report,print_report_name:sale_extended_taiga.action_report_saleorder_taiga
+msgid ""
+"(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or "
+"'Order - %s' % (object.name)"
+msgstr ""
+"${object.company_id.name} ${object.state in ('draft', 'sent') and "
+"(ctx.get('proforma') and 'Proforma' or ‘Presupuesto’) or ‘Pedido’} (Ref "
+"${object.name or 'n/a' })"
+
+#. module: sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid ""
 "<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
 "                            <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
@@ -30,72 +40,77 @@ msgstr ""
 "                                 <span groups=\"account.group_show_line_subtotals_tax_included\">Precio Total </span>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<span>Disc.%</span>"
-msgstr "<span>Disc.%</span>"
+msgstr "<span>Desc.%</span"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<span>Pro-Forma Invoice # </span>"
 msgstr "<span>Factura Pro-Forma # </span>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong class=\"mr16\">Subtotal</strong>"
 msgstr "<strong class=\"mr16\">Subtotal</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Expiration:</strong>"
-msgstr "<strong>Fecha de caducidad:</strong>"
+msgstr "<strong>Vencimiento:</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Fiscal Position Remark:</strong>"
 msgstr "<strong>Posición fiscal:</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Order Date:</strong>"
 msgstr "<strong>Fecha orden:</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
-msgid "<strong>Pago 1 Sola Vez</strong>"
-msgstr "<strong>Pago 1 Sola Vez</strong"
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
+msgid "<strong>Pago Mensual</strong>"
+msgstr "<strong>Pago Mensual</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
-msgid "<strong>Pago Recurrente</strong>"
-msgstr "<strong>Pago Recurrente</strong>"
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
+msgid "<strong>Pago NO Recurrente</strong>"
+msgstr "<strong>Pago NO Recurrente</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Quotation Date:</strong>"
 msgstr "<strong>Fecha de presupuesto:</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Salesperson:</strong>"
 msgstr "<strong>Comercial:</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
+msgid "<strong>Shipping Address:</strong>"
+msgstr "<strong>Dirección de Entrega:</strong>"
+
+#. module: sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Signature</strong>"
 msgstr "<strong>Firma</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Subtotal</strong>"
 msgstr "<strong>Subtotal</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Total</strong>"
 msgstr "<strong>Total</strong>"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "<strong>Your Reference:</strong>"
 msgstr "<strong>Su Referencia:</strong>"
 
@@ -105,7 +120,7 @@ msgid "Agrupar en PDF Fuera del Subtototal"
 msgstr "Agrupar en PDF Fuera del Subtototal"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "Description"
 msgstr "Descripción"
 
@@ -126,6 +141,16 @@ msgid "ID"
 msgstr "ID"
 
 #. module: sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
+msgid "Invoicing Address:"
+msgstr "Dirección de facturación:"
+
+#. module: sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
+msgid "Invoicing and Shipping Address:"
+msgstr "Dirección de facturación y envío:"
+
+#. module: sale_extended_taiga
 #: model:ir.model.fields,field_description:sale_extended_taiga.field_product_product____last_update
 #: model:ir.model.fields,field_description:sale_extended_taiga.field_product_template____last_update
 #: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order____last_update
@@ -141,16 +166,20 @@ msgstr "Mostar Columna de Impuestos"
 #. module: sale_extended_taiga
 #: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__show_label_notify
 msgid "Mostar Etiqueta Recuerrente"
-msgstr "Mostar Etiqueta Recuerrente"
+msgstr "Mostar Etiquetas en Total"
 
 #. module: sale_extended_taiga
 #: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__amount_not_recurrent
-#: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__amount_not_recurrent_total
 msgid "Not Recurrent Amount"
 msgstr "Monto no recurrente"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__amount_not_recurrent_total
+msgid "Not Recurrent Amount Total"
+msgstr "Monto no recurrente total"
+
+#. module: sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "Order #"
 msgstr "Pedido #"
 
@@ -176,20 +205,29 @@ msgid "Producto No recurrente Separa Total PDF"
 msgstr "Producto No recurrente Separa Total PDF"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "Quotation #"
 msgstr "Presupuesto # "
 
 #. module: sale_extended_taiga
+#: model:ir.actions.report,name:sale_extended_taiga.action_report_saleorder_taiga
+msgid "Quotation / Order Custom"
+msgstr "Presupuesto / Pedido Personalizado"
+
+#. module: sale_extended_taiga
 #: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__amount_recurrent
-#: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__amount_recurrent_total
 msgid "Recurrent Amount"
 msgstr "Monto Recurrente"
+
+#. module: sale_extended_taiga
+#: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__amount_recurrent_total
+msgid "Recurrent Amount Total"
+msgstr "Monto Recurrente Total"
 
 #. module: sale_extended_taiga
 #: model:ir.model,name:sale_extended_taiga.model_sale_order
@@ -202,11 +240,21 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "Taxes"
 msgstr "Impuestos"
 
 #. module: sale_extended_taiga
-#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_inherit_sale_extended_taiga
+#: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__amount_tax_not_recurrent
+msgid "Taxes NOT Recurrent"
+msgstr "Impuestos no recurrentes"
+
+#. module: sale_extended_taiga
+#: model:ir.model.fields,field_description:sale_extended_taiga.field_sale_order__amount_tax_recurrent
+msgid "Taxes Recurrent"
+msgstr "Impuestos recurrentes"
+
+#. module: sale_extended_taiga
+#: model_terms:ir.ui.view,arch_db:sale_extended_taiga.report_saleorder_document_taiga
 msgid "Unit Price"
 msgstr "Precio unitario"

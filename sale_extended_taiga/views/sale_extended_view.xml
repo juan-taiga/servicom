@@ -26,9 +26,13 @@
               
                    <field name="show_col_taxes" class="oe_inline"/>
                    <field name="show_label_notify" class="oe_inline"/>   
-                   <field name="amount_recurrent" />                
-                   <field name="amount_not_recurrent" />                
-                   
+                   <field name="amount_recurrent" />              
+                   <field name="amount_tax_recurrent" invisible="True"/>
+                   <field name="amount_recurrent_total"  invisible="True" />  
+
+                   <field name="amount_not_recurrent" />  
+                   <field name="amount_tax_not_recurrent"  invisible="True"/>    
+                   <field name="amount_not_recurrent_total"  invisible="True"/>    
             </xpath>
 
         </field>

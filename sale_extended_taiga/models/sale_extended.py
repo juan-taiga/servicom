@@ -33,13 +33,15 @@ class SaleOrder(models.Model):
         #Compute the total amounts of the SO.
         """
         for order in self:
-            amount_untaxed = amount_tax = amount_recurrent = amount_not_recurrent = 0.0
+            amount_untaxed = amount_tax = amount_recurrent = amount_not_recurrent = amount_tax_recurrent = amount_tax_not_recurrent = 0.0
             for line in order.order_line:
                 if(line.product_id.product_no_recurrente == False):
                     amount_recurrent += line.price_subtotal
+                    amount_tax_recurrent += line.price_tax
 
                 if(line.product_id.product_no_recurrente == True):
                     amount_not_recurrent += line.price_subtotal
+                    amount_tax_not_recurrent += line.price_tax
 
                 amount_untaxed += line.price_subtotal
                 amount_tax += line.price_tax
@@ -49,17 +51,26 @@ class SaleOrder(models.Model):
                 'amount_tax': amount_tax,
                 'amount_total': amount_untaxed + amount_tax,
                 'amount_recurrent': amount_recurrent,
-                'amount_recurrent_total': amount_recurrent + amount_tax,
+                'amount_tax_recurrent': amount_tax_recurrent,
+                'amount_recurrent_total': amount_recurrent + amount_tax_recurrent,
                 'amount_not_recurrent': amount_not_recurrent,
-                'amount_not_recurrent_total': amount_not_recurrent,
+                'amount_tax_not_recurrent': amount_tax_not_recurrent,
+                'amount_not_recurrent_total': amount_not_recurrent + amount_tax_not_recurrent,
             })
 
     show_col_taxes = fields.Boolean(string='Mostar Columna de Impuestos', default=True)
     show_label_notify = fields.Boolean(string='Mostar Etiqueta Recuerrente', default=True)
+    
+    #recurrent
     amount_recurrent = fields.Monetary(string='Recurrent Amount', store=True, readonly=True, compute='_amount_all', tracking=5)
-    amount_recurrent_total = fields.Monetary(string='Recurrent Amount', store=True, readonly=True, compute='_amount_all', tracking=5)
+    amount_recurrent_total = fields.Monetary(string='Recurrent Amount Total', store=True, readonly=True, compute='_amount_all', tracking=5)
+    amount_tax_recurrent = fields.Monetary(string='Taxes Recurrent', store=True, readonly=True, compute='_amount_all')
+
+    #not recurrent
     amount_not_recurrent = fields.Monetary(string='Not Recurrent Amount', store=True, readonly=True, compute='_amount_all', tracking=5)
-    amount_not_recurrent_total = fields.Monetary(string='Not Recurrent Amount', store=True, readonly=True, compute='_amount_all', tracking=5)
+    amount_not_recurrent_total = fields.Monetary(string='Not Recurrent Amount Total', store=True, readonly=True, compute='_amount_all', tracking=5)
+   
+    amount_tax_not_recurrent = fields.Monetary(string='Taxes NOT Recurrent', store=True, readonly=True, compute='_amount_all')
 
 
 

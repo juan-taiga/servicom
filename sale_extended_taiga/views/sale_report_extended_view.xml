@@ -1,10 +1,33 @@
 <?xml version="1.0"?>
 <odoo>
 
-   <template id="report_saleorder_document_inherit_sale_extended_taiga" inherit_id="sale.report_saleorder_document">
-        <xpath expr="//div[@class='page']" position="replace">
-            <div class="page">
-            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+
+    <template id="report_saleorder_document_taiga">
+    <t t-call="web.external_layout">
+        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+        <t t-set="address">
+            <div t-field="doc.partner_id"
+                t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+            <p t-if="doc.partner_id.vat"><t t-esc="doc.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="doc.partner_id.vat"/></p>
+        </t>
+        <t t-if="doc.partner_shipping_id == doc.partner_invoice_id
+                             and doc.partner_invoice_id != doc.partner_id
+                             or doc.partner_shipping_id != doc.partner_invoice_id">
+            <t t-set="information_block">
+                <strong t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and Shipping Address:</strong>
+                <strong t-if="doc.partner_shipping_id != doc.partner_invoice_id">Invoicing Address:</strong>
+                <div t-field="doc.partner_invoice_id"
+                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                    <strong>Shipping Address:</strong>
+                    <div t-field="doc.partner_shipping_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                </t>
+            </t>
+        </t>
+       
+        <div class="page">
+            
 
             <div class="oe_structure"/>
 
@@ -17,6 +40,7 @@
                     <span>Pro-Forma Invoice # </span>
                 </t>
                 <span t-field="doc.name"/>
+
             </h2>
 
             <div class="row mt32 mb32" id="informations">
@@ -44,6 +68,8 @@
 
             <!-- Is there a discount on at least one line? -->
             <t t-set="display_discount" t-value="any(l.discount for l in doc.order_line)"/>
+
+            <t t-if="doc.amount_recurrent > 0.00">
 
             <table class="table table-sm o_main_table">
                 <!-- In case we want to repeat the header, remove "display: table-row-group" -->
@@ -77,7 +103,7 @@
 
                         <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                             <t t-if="not line.display_type">
-                                <td name="td_name"><span t-field="line.name"/>-<span t-field="line.product_id.product_no_recurrente"/></td>
+                                <td name="td_name"><span t-field="line.name"/></td>
                                 <td name="td_quantity" class="text-right">
                                     <span t-field="line.product_uom_qty"/>
                                     <span t-field="line.product_uom"/>
@@ -143,13 +169,13 @@
                             </tr>
                             <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
                                 <tr style="">
-                                    <t t-if="amount_by_group[5] == 1 and doc.amount_recurrent == amount_by_group[2]">
+                                    <t t-if="amount_by_group[5] == 1 and doc.amount_tax_recurrent == amount_by_group[0]">
                                         <td name="td_amount_by_group_label_3">
-                                            <span t-esc="amount_by_group[0]"/>
-                                            <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></span>
+                                            <span t-esc="doc.amount_tax_recurrent"/>
+                                            <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="doc.amount_recurrent" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></span>
                                         </td>
                                         <td name="td_amount_by_group_3" class="text-right o_price_total">
-                                            <span t-esc="amount_by_group[1]"
+                                            <span t-esc="doc.amount_tax_recurrent"
                                                 t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                                         </td>
                                     </t>
@@ -158,14 +184,14 @@
                                             <span t-esc="amount_by_group[0]"/>
                                         </td>
                                         <td name="td_amount_by_group" class="text-right o_price_total">
-                                            <span t-esc="amount_by_group[1]"
+                                            <span t-esc="doc.amount_tax_recurrent"
                                                 t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                                         </td>
                                     </t>
                                 </tr>
                             </t>
                             <tr class="border-black o_total">
-                                <td name="td_amount_total_label"><strong>Total</strong></td>
+                                <td name="td_amount_total_label"><strong>Total</strong> <t t-if="doc.show_label_notify"><strong>Pago Mensual</strong></t></td>
                                 <td name="td_amount_total" class="text-right">
                                     <span t-field="doc.amount_recurrent_total"/>
                                    
@@ -173,12 +199,14 @@
 
                             </tr>
                         </table>
-                        <h6><t t-if="doc.show_label_notify"><strong>Pago Recurrente</strong></t></h6>
                     </div>
                 </div>
             </div>
 
-
+            </t>
+            <t t-if="doc.amount_not_recurrent > 0.00">
+            <br/>
+            <br/>
             <table class="table table-sm o_main_table">
                 <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                 <thead style="display: table-row-group">
@@ -198,9 +226,6 @@
                         </th>
                     </tr>
                 </thead>
-                <br/>
-                <br/>
-                <br/>
                 <br/>
                 <tbody class="sale_tbody">
 
@@ -272,7 +297,6 @@
                     </t>
                 </tbody>
             </table>
-
             <div class="clearfix" name="so_total_summary2">
                 <div id="total" class="row" name="total2">
                     <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
@@ -282,11 +306,35 @@
                                 <td name="td_amount_untaxed_label1"><strong>Subtotal</strong></td>
                                 <td name="td_amount_untaxed1" class="text-right">
                                     <span t-field="doc.amount_not_recurrent"/>
+
                                 </td>
                             </tr>
+                                   <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
+                                <tr style="">
+                                    <t t-if="amount_by_group[5] == 1 and doc.amount_tax_not_recurrent == amount_by_group[0]">
+                                        <td name="td_amount_by_group_label_3">
+                                            <span t-esc="amount_by_group[0]"/>
+                                            <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="doc.amount_not_recurrent" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></span>
+                                        </td>
+                                        <td name="td_amount_by_group_3" class="text-right o_price_total">
+                                            <span t-esc="doc.amount_tax_not_recurrent"
+                                                t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                        </td>
+                                    </t>
+                                    <t t-else ="">
+                                        <td name="td_amount_by_group_label">
+                                            <span t-esc="amount_by_group[0]"/>
+                                        </td>
+                                        <td name="td_amount_by_group" class="text-right o_price_total">
+                                            <span t-esc="doc.amount_tax_not_recurrent"
+                                                t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
              
                             <tr class="border-black o_total">
-                                <td name="td_amount_total_label2"><strong>Total</strong></td>
+                                <td name="td_amount_total_label2"><strong>Total</strong> <t t-if="doc.show_label_notify"><strong>Pago NO Recurrente</strong></t></td>
                                 <td name="td_amount_total2" class="text-right">
                                     <span t-field="doc.amount_not_recurrent_total"/>
                                    
@@ -294,10 +342,12 @@
 
                             </tr>
                         </table>
-                        <h6><t t-if="doc.show_label_notify"><strong>Pago 1 Sola Vez</strong></t></h6>
+                        <h6></h6>
                     </div>
                 </div>
             </div>
+
+            </t>
 
             <div t-if="doc.signature" class="mt32 ml64 mr4" name="signature">
                 <div class="offset-8">
@@ -322,7 +372,17 @@
                 <span t-field="doc.fiscal_position_id.sudo().note"/>
             </p>
         </div>
-        </xpath>
+    </t>
+</template>
+
+
+    <template id="report_saleorder_taiga">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sale_extended_taiga.report_saleorder_document_taiga" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
     </template>
+
 
 </odoo>
