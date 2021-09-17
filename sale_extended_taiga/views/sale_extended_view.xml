@@ -1,0 +1,45 @@
+<odoo>
+  <data>
+
+
+    <record id="product_template_form_view2" model="ir.ui.view">
+        <field name="name">product.template.form.view.inherit.TAIGA</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_policy']" position="after">
+                <group name="public_description_2">
+                    <group string="Producto No Recuerrente">
+                        <field name="product_no_recurrente" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+     <record model="ir.ui.view" id="managment_control_report_taxes">
+        <field name="name">sale.order.margin.view.form.inherited.TAIGA</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+              
+                   <field name="show_col_taxes" class="oe_inline"/>
+                   <field name="show_label_notify" class="oe_inline"/>   
+                   <field name="amount_recurrent" />              
+                   <field name="amount_tax_recurrent" invisible="True"/>
+                   <field name="amount_recurrent_total"  invisible="True" />  
+
+                   <field name="amount_not_recurrent" />  
+                   <field name="amount_tax_not_recurrent"  invisible="True"/>    
+                   <field name="amount_not_recurrent_total"  invisible="True"/>    
+            </xpath>
+
+        </field>
+    </record>
+
+   
+    
+
+    </data>
+</odoo>
